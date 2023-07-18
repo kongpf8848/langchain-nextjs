@@ -9,6 +9,7 @@ import { JSONLoader, JSONLinesLoader, } from "langchain/document_loaders/fs/json
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { CSVLoader } from "langchain/document_loaders/fs/csv";
 
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    //    const model = new ChatOpenAI({
    //       streaming: true,
@@ -37,8 +38,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    // );
    // const docs = await loader.load();
    // console.log({ docs });
+   if (req.method !== 'POST') {
+      res.status(400).json({ text: "error" })
+      return;
+  }
    
-   res.status(200).json({ text: "abcd" })
+   res.status(200).json({ text: "哈哈" })
 }
 
 export default handler;
