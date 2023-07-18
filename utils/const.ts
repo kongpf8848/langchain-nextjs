@@ -1,4 +1,4 @@
-export const DEFAULT_SYSTEM_PROMPT ="You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
+export const DEFAULT_SYSTEM_PROMPT ="You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully.";
 
 export const OPENAI_TYPE = process.env.OPENAI_TYPE;
 export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;

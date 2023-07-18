@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { LLMChain } from "langchain/chains";
@@ -16,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    }
    res.writeHead(
       200,{
-         "Content-Type": "text/event-stream; charset=utf-8",
+         "Content-Type": "text/event-stream",
          "Cache-Control": "no-cache",
          "Connection": "keep-alive",
          "Access-Control-Allow-Origin": "*"
@@ -24,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
    var message = req.body.message
    console.log("++++++++++++++reqeust message:" + message)
-
+   const encoder = new TextEncoder();
    const chat = new ChatOpenAI({
       openAIApiKey: OPENAI_API_KEY,
       modelName: OPENAI_API_MODEL,
@@ -34,10 +33,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       verbose: true,
       callbacks: CallbackManager.fromHandlers({
          handleLLMNewToken: async (token: string) => {
-            res.write(`data: ${token.replace(/["'\n\r]/g, "")}\n\n`)
+            var json=JSON.stringify({text:token})
+            res.write(encoder.encode(`data: ${json}\n\n`))
          },
          handleLLMEnd: async () => {
-            res.write(`data: [DONE]\n\n`)
+            res.write(encoder.encode(`data: [DONE]\n\n`))
          },
          handleLLMError: async (e) => {
 
