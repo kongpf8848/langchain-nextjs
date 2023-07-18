@@ -1,49 +1,68 @@
+import { NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { OpenAI, OpenAIChat } from "langchain/llms/openai";
+import { LLMChain } from "langchain/chains";
 import { ChatOpenAI } from "langchain/chat_models/openai";
-import { HumanMessage, SystemMessage } from "langchain/schema";
+import { CallbackManager } from "langchain/callbacks";
+import { ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, } from "langchain/prompts";
 
-import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { JSONLoader, JSONLinesLoader, } from "langchain/document_loaders/fs/json";
-import { TextLoader } from "langchain/document_loaders/fs/text";
-import { CSVLoader } from "langchain/document_loaders/fs/csv";
+import { OPENAI_API_KEY, OPENAI_API_MODEL,DEFAULT_SYSTEM_PROMPT } from "../../utils/const";
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-   //    const model = new ChatOpenAI({
-   //       streaming: true,
-   //       azureOpenAIApiKey: "xxx",
-   //       azureOpenAIApiInstanceName: "xxx",
-   //       azureOpenAIApiDeploymentName: "xxx",
-   //       azureOpenAIApiVersion: "2023-03-15-preview",
-   //       temperature: 0.9,
-   //     });
-   //    const response = await model.call([
-   //       new SystemMessage(
-   //          "You are an AI assistant that helps people find information."
-   //       ),
-   //       new HumanMessage(
-   //           "who is elon mask"
-   //       ),
-   //   ]);
-
-   // const loader = new DirectoryLoader("../../assets/example",
-   //    {
-   //       ".json": (path) => new JSONLoader(path, "/texts"),
-   //       ".jsonl": (path) => new JSONLinesLoader(path, "/html"),
-   //       ".txt": (path) => new TextLoader(path),
-   //       ".csv": (path) => new CSVLoader(path, "text"),
-   //    }
-   // );
-   // const docs = await loader.load();
-   // console.log({ docs });
    if (req.method !== 'POST') {
-      res.status(400).json({ text: "error" })
+      res.status(400).json({ text: "api only support POST" })
       return;
-  }
-   
-   res.status(200).json({ text: "哈哈" })
+   }
+   res.writeHead(
+      200,{
+         "Content-Type": "text/event-stream; charset=utf-8",
+         "Cache-Control": "no-cache",
+         "Connection": "keep-alive",
+         "Access-Control-Allow-Origin": "*"
+      })
+
+   var message = req.body.message
+   console.log("++++++++++++++reqeust message:" + message)
+
+   const chat = new ChatOpenAI({
+      openAIApiKey: OPENAI_API_KEY,
+      modelName: OPENAI_API_MODEL,
+      maxTokens: 1000,
+      temperature: 0,
+      streaming: true,
+      verbose: true,
+      callbacks: CallbackManager.fromHandlers({
+         handleLLMNewToken: async (token: string) => {
+            res.write(`data: ${token.replace(/["'\n\r]/g, "")}\n\n`)
+         },
+         handleLLMEnd: async () => {
+            res.write(`data: [DONE]\n\n`)
+         },
+         handleLLMError: async (e) => {
+
+         },
+      }),
+   });
+
+   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+         DEFAULT_SYSTEM_PROMPT      
+         ),
+      HumanMessagePromptTemplate.fromTemplate("{text}"),
+   ]);
+
+   const chain = new LLMChain({
+      prompt: chatPrompt,
+      llm: chat,
+   });
+
+   await chain.call({
+      text: message
+   });
+
+   res.end()
+
 }
 
 export default handler;
