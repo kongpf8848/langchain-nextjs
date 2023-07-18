@@ -1,18 +1,28 @@
+import { NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
+
 import { LLMChain } from "langchain/chains";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { CallbackManager } from "langchain/callbacks";
-import { NextResponse } from "next/server";
-
 import { ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, } from "langchain/prompts";
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { OPENAI_API_KEY,OPENAI_API_MODEL} from "../../utils/const";
 
-export const runtime = "edge";
+export const config = {
+    runtime: "edge",
+};
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse)=>{
 
-    //const body = await req.body();
-    //console.log("++++++++++++++++requestBody:"+body)
+    // if (req.method !== 'POST') {
+    //     res.status(400).json({ text: "api only support POST" })
+    //     return;
+    // }
+
+    console.log("++++++++++++++reqeust body:"+req.body)
+    var message=req.body.message
+    console.log("++++++++++++++reqeust message:"+message)
+
     const encoder = new TextEncoder();
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
@@ -61,13 +71,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     chain.call({
         input_language: "English",
         output_language: "Chinese",
-        //text: "Large language models (LLMs) are emerging as a transformative technology, enabling developers to build applications that they previously could not. However, using these LLMs in isolation is often insufficient for creating a truly powerful app - the real power comes when you can combine them with other sources of computation or knowledge.",
-        text: "who is bill gates"
+        text: message
     });
 
     return new NextResponse(stream.readable, {
         headers: {
-            "Content-Type": "text/event-stream",
+            "Content-Type": "text/event-stream; charset=utf-8",
             "Cache-Control": "no-cache",
             "Connection":"keep-alive",
             "Access-Control-Allow-Origin":"*"
@@ -77,3 +86,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler;
+
