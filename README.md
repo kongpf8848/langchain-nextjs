@@ -2,8 +2,6 @@
 
 This demo show use [langchain](https://github.com/hwchase17/langchain) and  [Next.js](https://nextjs.org/) call llms(OpenAI，Azure OpenAI...)
 
-## Getting Started
-
 ## Precondition
 ```bash
 export OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
