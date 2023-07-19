@@ -1,17 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { TextLoader } from "langchain/document_loaders/fs/text";
-import { TextLoader } from "langchain/document_loaders/fs/text";
+import { UnstructuredLoader } from "langchain/document_loaders/fs/unstructured";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const loader = new TextLoader(
-        "assets/example/example.txt"
+    const loader = new UnstructuredLoader(
+        "assets/example/example.eml"
     );
     const docs = await loader.load();
     docs.forEach((value,index,array)=>{
-        console.log("+++++++++txt:" + value.pageContent);
+        console.log("+++++++++eml2:" + JSON.stringify(value.metadata));
     })
-    unstr
 
-    
     res.status(200).json({ text: "abcd" })
 };
