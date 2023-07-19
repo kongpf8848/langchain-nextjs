@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { LLMChain } from "langchain/chains";
@@ -8,14 +7,7 @@ import { ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemp
 import { OPENAI_API_KEY, OPENAI_API_MODEL } from "../../utils/const";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (req.method !== 'POST') {
-       res.status(400).json({ text: "api only support method POST" })
-       return;
-    }
- 
-    var message = req.body.message
-    console.log("++++++++++++++reqeust message:" + message)
- 
+  
     const chat = new ChatOpenAI({
        openAIApiKey: OPENAI_API_KEY,
        modelName: OPENAI_API_MODEL,
@@ -39,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const result=await chain.call({
        input_language: "English",
        output_language: "Chinese",
-       text: message
+       text: "I love programming."
     });
  
     res.status(200).json(result)
