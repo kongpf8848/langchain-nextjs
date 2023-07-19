@@ -18,6 +18,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## API
+| URL | Memo |
+| --- | --- |
+|[/api/chat](http://localhost:3000/api/chat) | Chat completions with Streaming output|
+|[/api/translate](http://localhost:3000/api/translate) | Translate English to Chinese|
+|[/api/chain](http://localhost:3000/api/chain) |process multiple tasks with chains|
+
 ## Docker
 
 Build
