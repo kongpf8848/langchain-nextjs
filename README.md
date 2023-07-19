@@ -18,3 +18,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Docker
+
+Build
+
+```bash
+docker build -t langchain-nextjs .
+```
+Run
+
+```bash
+docker run -p 3000:3000 -e OPENAI_API_KEY=sk-xxxxx -d langchain-nextjs
+```
