@@ -52,6 +52,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     const result=await chain.run(text)
     console.log("+++++++++doctor_suggest:\n" + result)
 
-    res.status(200).json({ text: "ok" })
+    res.status(200).json({ text: result })
 
 }

@@ -9,10 +9,6 @@ import { OPENAI_API_KEY, OPENAI_API_MODEL,DEFAULT_SYSTEM_PROMPT } from "../../ut
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-   if (req.method !== 'POST') {
-      res.status(400).json({ text: "api only support POST" })
-      return;
-   }
    res.writeHead(
       200,{
          "Content-Type": "text/event-stream",
@@ -21,8 +17,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
          "Access-Control-Allow-Origin": "*"
       })
 
-   var message = req.body.message
-   console.log("++++++++++++++reqeust message:" + message)
    const encoder = new TextEncoder();
    const chat = new ChatOpenAI({
       openAIApiKey: OPENAI_API_KEY,
@@ -58,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    });
 
    await chain.call({
-      text: message
+      text: "Who is Elon Mask?"
    });
 
    res.end()
