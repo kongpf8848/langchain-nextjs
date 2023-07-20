@@ -57,6 +57,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             question:"湖南高考人数是多少？"
         })
 
+        
+
         res.status(200).json(result)
 
 }
