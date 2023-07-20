@@ -6,7 +6,8 @@ import { CallbackManager } from "langchain/callbacks";
 import { ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, } from "langchain/prompts";
 
 import { OPENAI_API_KEY, OPENAI_API_MODEL,DEFAULT_SYSTEM_PROMPT } from "../../utils/const";
-
+import { AZURE_OPENAI_API_KEY,AZURE_OPENAI_API_INSTANCE_NAME,AZURE_OPENAI_API_DEPLOYMENT_NAME } from '../../utils/const';
+import { AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,AZURE_OPENAI_API_VERSION } from '../../utils/const';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    res.writeHead(
@@ -19,8 +20,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
    const encoder = new TextEncoder();
    const chat = new ChatOpenAI({
-      openAIApiKey: OPENAI_API_KEY,
-      modelName: OPENAI_API_MODEL,
+      azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
+      azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
+      azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
+      azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION,
       maxTokens: 1000,
       temperature: 0,
       streaming: true,

@@ -3,6 +3,10 @@ import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { MarkdownTextSplitter, TextSplitter } from 'langchain/text_splitter';
+import { loadQAChain, loadQAStuffChain } from 'langchain/chains';
+import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { AZURE_OPENAI_API_KEY,AZURE_OPENAI_API_INSTANCE_NAME,AZURE_OPENAI_API_DEPLOYMENT_NAME } from '../../utils/const';
+import { AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,AZURE_OPENAI_API_VERSION } from '../../utils/const';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
@@ -21,7 +25,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         console.log("+++++++++index:",index,",value:",value);
     })
 
-    const embeddings=new OpenAIEmbeddings()
+    const embeddings=new OpenAIEmbeddings({
+        azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
+        azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
+        azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
+        azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
+        azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION
+  
+    })
     const vectorStore=await FaissStore.fromTexts(
         output,
         [{ id: 1 }, { id: 2 }, { id: 3 }],
@@ -30,9 +41,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const prompt = "湖南高考报名人数"
         const topK = 3;
         // 搜索最相关的topK个块
-        const searchResult = await vectorStore.similaritySearchWithScore(prompt, topK);
+        const searchResult = await vectorStore.similaritySearch(prompt, topK);
         console.log("+++++++++searchResult:",searchResult);
-    
-        res.status(200).json({text:"ok"})
+        const llm=new ChatOpenAI({
+            azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
+            azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
+            azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
+            azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
+            azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION,
+            verbose:true
+        })
+        const stuffChain=loadQAStuffChain(llm)
+        const result=await stuffChain.call({
+            input_documents:searchResult,
+            question:"湖南高考人数是多少？"
+        })
+
+        res.status(200).json(result)
 
 }

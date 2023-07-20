@@ -3,6 +3,8 @@ import { LLMChain, SequentialChain, SimpleSequentialChain } from "langchain/chai
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { OPENAI_API_KEY, OPENAI_API_MODEL } from "../../utils/const";
+import { AZURE_OPENAI_API_KEY,AZURE_OPENAI_API_INSTANCE_NAME,AZURE_OPENAI_API_DEPLOYMENT_NAME } from '../../utils/const';
+import { AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,AZURE_OPENAI_API_VERSION } from '../../utils/const';
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
 
@@ -19,8 +21,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 因此，患者应尽快就医，及时进行治疗。治疗阿尔茨海默病的方法有药物治疗、行为治疗、认知行为治疗等，具体治疗方案要根据患者的具体情况而定。"
 
     const llm = new OpenAI({
-        openAIApiKey: OPENAI_API_KEY,
-        modelName: OPENAI_API_MODEL,
+        azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
+        azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
+        azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
+        azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
+        azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION
     })
 
     const promptTemplate = new PromptTemplate({
