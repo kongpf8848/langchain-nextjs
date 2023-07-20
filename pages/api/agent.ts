@@ -3,7 +3,7 @@ import { OpenAIEmbeddings } from "langchain/embeddings";
 import { MarkdownTextSplitter } from "langchain/text_splitter";
 import { FaissStore } from "langchain/vectorstores/faiss";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Calculator } from "../../utils/tools/Calculator"
+import { Calculator } from "langchain/tools/calculator";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
 
 
@@ -68,7 +68,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     })
 
     // 用户提问
-    const input = '湖南高考报名人数加上甘肃高考报名人数的和，具体到多少个人，用中文回答';
+    const input = '湖南高考人数加上甘肃高考人数的和，具体到多少个人，用中文回答';
     // 结果: 湖南高考报名人数加上甘肃高考报名人数结果为931848
     const result = await executor.call({ input });
 
