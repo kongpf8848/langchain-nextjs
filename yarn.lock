@@ -650,6 +650,13 @@ chownr@^1.1.1:
   resolved "https://registry.npmmirror.com/chownr/-/chownr-1.1.4.tgz"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
+chromadb@^1.5.3, chromadb@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.npmjs.org/chromadb/-/chromadb-1.5.5.tgz"
+  integrity sha512-PLs/HA35C7Yp7cChhroV4wBly74fOHGO4mVi24HThrc1KqUqEuMu36/W5cPbMDRmOprZKCvZ1ieLxlyZ9ednYA==
+  dependencies:
+    isomorphic-fetch "^3.0.0"
+
 client-only@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmmirror.com/client-only/-/client-only-0.0.1.tgz"
@@ -1225,7 +1232,7 @@ expr-eval@^2.0.2:
 
 faiss-node@^0.2.1, faiss-node@^0.2.2:
   version "0.2.2"
-  resolved "https://registry.npmmirror.com/faiss-node/-/faiss-node-0.2.2.tgz"
+  resolved "https://registry.npmjs.org/faiss-node/-/faiss-node-0.2.2.tgz"
   integrity sha512-6Hue9mFwxfOCdCXXvgezKulkKlVVeKAdCOYaRkzlrrObJngahOCyW3qrh64trXglpWc1vP9+3aF3mENnNKTOfA==
   dependencies:
     bindings "^1.5.0"
@@ -1837,6 +1844,14 @@ isexe@^2.0.0:
   resolved "https://registry.npmmirror.com/isexe/-/isexe-2.0.0.tgz"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
+isomorphic-fetch@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-3.0.0.tgz"
+  integrity sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==
+  dependencies:
+    node-fetch "^2.6.1"
+    whatwg-fetch "^3.4.1"
+
 jiti@^1.18.2:
   version "1.19.1"
   resolved "https://registry.npmmirror.com/jiti/-/jiti-1.19.1.tgz"
@@ -2169,7 +2184,7 @@ node-ensure@^0.0.0:
   resolved "https://registry.npmjs.org/node-ensure/-/node-ensure-0.0.0.tgz"
   integrity sha512-DRI60hzo2oKN1ma0ckc6nQWlHU69RH6xN0sjQTjMpChPfTYvKZdcQFfdYK2RWbJcKyUizSIy/l8OTGxMAM1QDw==
 
-node-fetch@^2.6.7:
+node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.12"
   resolved "https://registry.npmmirror.com/node-fetch/-/node-fetch-2.6.12.tgz"
   integrity sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==
@@ -2420,7 +2435,7 @@ pdf-parse@^1.1.1, pdf-parse@1.1.1:
 
 pickleparser@^0.1.0:
   version "0.1.0"
-  resolved "https://registry.npmmirror.com/pickleparser/-/pickleparser-0.1.0.tgz"
+  resolved "https://registry.npmjs.org/pickleparser/-/pickleparser-0.1.0.tgz"
   integrity sha512-L81sYaXj6JlEOtVPwhXsEjlDQ0fjxPGf9ay4uBfQnsrR87mZ8SFQR/OD8kdqjQdeyMFcWyCMhx7WKZT1yZK7FQ==
 
 picocolors@^1.0.0:
@@ -3170,6 +3185,11 @@ webidl-conversions@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmmirror.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz"
   integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
+
+whatwg-fetch@^3.4.1:
+  version "3.6.17"
+  resolved "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-3.6.17.tgz"
+  integrity sha512-c4ghIvG6th0eudYwKZY5keb81wtFz9/WeAHAoy8+r18kcWlitUIrmGFQ2rWEl4UCKUilD3zCLHOIPheHx5ypRQ==
 
 whatwg-url@^5.0.0:
   version "5.0.0"
