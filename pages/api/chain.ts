@@ -28,6 +28,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION
     })
 
+    const controller=new AbortController()
+    controller.abort()
+
     const promptTemplate = new PromptTemplate({
         template: "从下面的本文中提取关键事实。尽量使用文本中的统计数据来说明事实:\n\n {text_input}",
         inputVariables: ["text_input"]
