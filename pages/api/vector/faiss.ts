@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         embeddings
     )
 
-    const directory = "/Users/kongpengfei/Desktop/vector";
+    const directory = "/Users/kongpengfei/Desktop/ai/vector";
     await vectorStore.save(directory)
 
     vectorStore.asRetriever()
