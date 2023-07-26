@@ -6,11 +6,11 @@ import { AZURE_OPENAI_API_KEY, AZURE_OPENAI_API_INSTANCE_NAME, AZURE_OPENAI_API_
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const embeddings = new OpenAIEmbeddings({
-        azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
-        azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
-        azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
-        azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
-        azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION,
+        // azureOpenAIApiKey:AZURE_OPENAI_API_KEY,
+        // azureOpenAIApiInstanceName:AZURE_OPENAI_API_INSTANCE_NAME,
+        // azureOpenAIApiDeploymentName:AZURE_OPENAI_API_DEPLOYMENT_NAME,
+        // azureOpenAIApiEmbeddingsDeploymentName:AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME,
+        // azureOpenAIApiVersion:AZURE_OPENAI_API_VERSION,
         timeout: 10000, // 1s timeout
       });
       /* Embed queries */
